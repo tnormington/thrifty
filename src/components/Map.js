@@ -5,9 +5,7 @@ import GoogleMapReact from "google-map-react";
 import { googleMapKey } from "../keys";
 
 import Pin from "./Pin";
-import NewPinForm from "./NewPinForm";
-
-// import AddPin from "./AddPin";
+import NewPin from "./NewPin";
 
 const defaultMapProps = {
   center: {
@@ -17,7 +15,7 @@ const defaultMapProps = {
   zoom: 13,
 };
 
-const Map = () => {
+const Map = ({ userType }) => {
   const [pins, setPins] = useState();
   const [newPin, setNewPin] = useState(null);
   useEffect(() => {
@@ -39,8 +37,11 @@ const Map = () => {
   };
 
   const handleMapClick = (data) => {
-    console.log(data);
-    setNewPin(data);
+    if (newPin === null && userType === "listing") setNewPin(data);
+  };
+
+  const clearNewPin = () => {
+    setNewPin(null);
   };
 
   return (
@@ -51,7 +52,7 @@ const Map = () => {
         defaultZoom={defaultMapProps.zoom}
         onClick={handleMapClick}
       >
-        {newPin !== null && <NewPinForm {...newPin} />}
+        {newPin !== null && <NewPin {...newPin} clearNewPin={clearNewPin} />}
         {pins && pins.map((pin) => <Pin {...pin} />)}
       </GoogleMapReact>
     </div>

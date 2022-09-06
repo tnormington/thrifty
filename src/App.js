@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 
-import NewPinForm from "./components/NewPinForm";
+import NewPinForm from "./components/NewPin";
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
@@ -21,6 +21,12 @@ const auth = getAuth(app);
 
 function App() {
   const [user, setUser] = useState(null);
+  const [address, setAddress] = useState("");
+  const [userType, setUserType] = useState(null);
+
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+  };
 
   const logout = (e) => {
     e.preventDefault();
@@ -39,7 +45,17 @@ function App() {
         )}
       </nav>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              userType={userType}
+              address={address}
+              setUserType={setUserType}
+              handleAddressChange={handleAddressChange}
+            />
+          }
+        />
         <Route
           path="/signup"
           element={<Signup auth={auth} user={user} setUser={setUser} />}
