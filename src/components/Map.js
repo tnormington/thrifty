@@ -11,6 +11,19 @@ const defaultMapProps = {
   zoom: 13,
 };
 
+const Pin = () => {
+  return (
+    <div
+      style={{
+        width: "20px",
+        height: "20px",
+        borderRadius: "50%",
+        background: "red",
+      }}
+    ></div>
+  );
+};
+
 const Maps = () => {
   return (
     <div style={{ height: "100vh", width: "100%" }}>
@@ -18,7 +31,9 @@ const Maps = () => {
         bootstrapURLKeys={{ key: googleMapKey }}
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
-      />
+      >
+        <Pin lat={43.2318706} lng={-70.8997593} />
+      </GoogleMapReact>
     </div>
   );
 };

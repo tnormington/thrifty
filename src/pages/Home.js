@@ -21,12 +21,20 @@ const Home = () => {
           alignItems: "center",
         }}
       >
-        <h1>Thrifty</h1>
+        <h1
+          style={{
+            fontSize: "60px",
+            color: "#fff",
+            textShadow: "2px 2px 10px rgba(0, 0, 0, 0.8)",
+          }}
+        >
+          Thrifty
+        </h1>
         <input
           type="text"
           value={zip}
           onChange={handleZipChange}
-          placeholder="Zip Code"
+          placeholder="Enter A Zip Code"
         />
       </div>
       <Map />
