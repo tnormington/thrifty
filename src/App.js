@@ -12,7 +12,7 @@ import Map from "./components/Map";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-import firebaseConfig from "./firebaseConfig";
+import { firebaseConfig } from "./keys";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -27,7 +27,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <nav>
+      <nav style={{ position: "absolute", width: "100%" }}>
         <Link to="/">Home</Link>
         {!user && <Link to="/signup">Login</Link>}
         {user && (
