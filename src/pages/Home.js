@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AddPin from "../components/AddPin";
 
 import Map from "../components/Map";
 
@@ -23,6 +24,7 @@ const Home = () => {
       >
         <h1
           style={{
+            pointerEvents: "none",
             fontSize: "60px",
             color: "#fff",
             textShadow: "2px 2px 10px rgba(0, 0, 0, 0.8)",
@@ -37,6 +39,7 @@ const Home = () => {
           placeholder="Enter A Zip Code"
         />
       </div>
+      <AddPin />
       <Map />
     </div>
   );

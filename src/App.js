@@ -7,15 +7,15 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 
-import Map from "./components/Map";
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getDatabase, set, ref } from "firebase/database";
 
 import { firebaseConfig } from "./keys";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+// const db = getDatabase(app);
 
 function App() {
   const [user, setUser] = useState(null);
