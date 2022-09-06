@@ -4,6 +4,11 @@ import { getDatabase, set, push, ref, onValue } from "firebase/database";
 import GoogleMapReact from "google-map-react";
 import { googleMapKey } from "../keys";
 
+import Pin from "./Pin";
+import NewPinForm from "./NewPinForm";
+
+// import AddPin from "./AddPin";
+
 const defaultMapProps = {
   center: {
     lat: 43.2177483,
@@ -12,21 +17,9 @@ const defaultMapProps = {
   zoom: 13,
 };
 
-const Pin = () => {
-  return (
-    <div
-      style={{
-        width: "20px",
-        height: "20px",
-        borderRadius: "50%",
-        background: "red",
-      }}
-    ></div>
-  );
-};
-
-const Maps = () => {
+const Map = () => {
   const [pins, setPins] = useState();
+  const [newPin, setNewPin] = useState(null);
   useEffect(() => {
     const db = getDatabase();
     const pinsRef = ref(db, "pins");
@@ -45,17 +38,24 @@ const Maps = () => {
     return result;
   };
 
+  const handleMapClick = (data) => {
+    console.log(data);
+    setNewPin(data);
+  };
+
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: googleMapKey }}
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
+        onClick={handleMapClick}
       >
+        {newPin !== null && <NewPinForm {...newPin} />}
         {pins && pins.map((pin) => <Pin {...pin} />)}
       </GoogleMapReact>
     </div>
   );
 };
 
-export default Maps;
+export default Map;

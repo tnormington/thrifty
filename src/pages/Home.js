@@ -17,14 +17,12 @@ const Home = () => {
           zIndex: "2",
           top: "25%",
           width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          pointerEvents: "none",
         }}
       >
         <h1
           style={{
-            pointerEvents: "none",
+            textAlign: "center",
             fontSize: "60px",
             color: "#fff",
             textShadow: "2px 2px 10px rgba(0, 0, 0, 0.8)",
@@ -32,14 +30,14 @@ const Home = () => {
         >
           Thrifty
         </h1>
-        <input
-          type="text"
-          value={zip}
-          onChange={handleZipChange}
-          placeholder="Enter A Zip Code"
-        />
       </div>
-      <AddPin />
+      <input
+        type="text"
+        value={zip}
+        onChange={handleZipChange}
+        placeholder="Enter A Zip Code"
+      />
+      {/* <AddPin /> */}
       <Map />
     </div>
   );
