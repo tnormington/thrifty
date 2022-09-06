@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import Map from "../components/Map";
+
 const Home = () => {
   const [zip, setZip] = useState("");
 
@@ -15,6 +17,7 @@ const Home = () => {
         onChange={handleZipChange}
         placeholder="Zip Code"
       />
+      <Map />
     </div>
   );
 };
