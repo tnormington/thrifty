@@ -19,3 +19,22 @@ input[type="submit"] {
 * {
   box-sizing: border-box;
 }
+
+
+label {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  opacity: 0.5;
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+.react-datetime-picker {
+  width: 100%;
+}
+
+.react-datetime-picker__wrapper {
+  border-radius: 4px;
+  padding: 4px 6px;
+}

@@ -10,6 +10,8 @@ const Pin = ({ color = "red", outline = false }) => {
         background: !outline ? color : "transparent",
         border: `2px solid ${color}`,
         transform: "translate(-50%, -50%)",
+        position: "relative",
+        zIndex: -1,
       }}
     ></div>
   );

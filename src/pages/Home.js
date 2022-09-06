@@ -77,7 +77,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
                 <input
                   style={{ marginBottom: 10, width: "100%" }}
                   type="text"
-                  placeholder="Enter an Address"
+                  placeholder="Enter an Address or click anywhere on the map to drop a pin"
                   value={address}
                   onChange={handleAddressChange}
                 />
@@ -100,7 +100,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
                 <input
                   style={{ marginBottom: 10, width: "100%" }}
                   type="text"
-                  placeholder="Address or Zip Code"
+                  placeholder="Enter an Address or Zip Code"
                   value={address}
                   onChange={handleAddressChange}
                 />
