@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, set, push, ref, onValue } from "firebase/database";
 
 import GoogleMapReact from "google-map-react";
-import { googleMapKey } from "../keys";
+// import { googleMapKey } from "../keys";
 
 import Pin from "./Pin";
 import NewPin from "./NewPin";
@@ -33,7 +33,7 @@ const Map = ({
   return (
     <div style={{ height: "calc(100vh - 60px)", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: googleMapKey }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
         onClick={handleMapClick}

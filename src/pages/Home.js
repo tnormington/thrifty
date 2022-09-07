@@ -119,11 +119,13 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
           <Button
             active={userType === "looking"}
             variant="primary"
+            size="lg"
             onClick={() => handleUserTypeChange("looking")}
           >
             Looking
           </Button>
           <Button
+            size="lg"
             active={userType === "listing"}
             variant="primary"
             onClick={() => handleUserTypeChange("listing")}
@@ -131,6 +133,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
             Listing
           </Button>
           <Button
+            size="lg"
             active={userType === "filtering"}
             variant="primary"
             onClick={() => handleUserTypeChange("filtering")}
