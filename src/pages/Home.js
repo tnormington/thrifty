@@ -12,8 +12,8 @@ import NewPinForm from "../components/NewPinForm";
 const Home = ({ userType, address, setUserType, handleAddressChange }) => {
   const [pins, setPins] = useState();
   const [newPin, setNewPin] = useState(null);
-  const [hoveredPin, setHoveredPin] = useState(null);
   const [activePin, setActivePin] = useState(null);
+  const [latOffset, setLatOffset] = useState();
 
   useEffect(() => {
     const db = getDatabase();
@@ -33,17 +33,14 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
     return result;
   };
 
-  const onMapChange = ({ center, zoom, bounds, marginBounds }) => {
-    // TODO: maybe use this to lock center when there is a newPin down, I can't figure out if that is good UX
+  const onMapChange = ({ center, zoom, bounds, marginBounds, size }) => {
+    setLatOffset((200 * (bounds.nw.lat - bounds.se.lat)) / size.height);
   };
 
-  const handleUserTypeToggle = () => {
+  const handleUserTypeChange = (type) => {
     setNewPin(null);
-    setUserType(userType === "looking" ? "listing" : "looking");
-  };
-
-  const handleHoverPin = (id) => {
-    setHoveredPin(hoveredPin === id ? null : id);
+    setActivePin(null);
+    setUserType(type);
   };
 
   const handlePinClick = (id) => {
@@ -97,14 +94,14 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
           <Button
             active={userType === "looking"}
             variant="primary"
-            onClick={handleUserTypeToggle}
+            onClick={() => handleUserTypeChange("looking")}
           >
             Looking
           </Button>
           <Button
             active={userType === "listing"}
             variant="primary"
-            onClick={handleUserTypeToggle}
+            onClick={() => handleUserTypeChange("listing")}
           >
             Listing
           </Button>
@@ -117,10 +114,9 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
         newPin={newPin}
         setNewPin={setNewPin}
         onMapChange={onMapChange}
-        handleHoverPin={handleHoverPin}
-        hoveredPin={hoveredPin}
         handlePinClick={handlePinClick}
         activePin={activePin}
+        latOffset={latOffset}
       />
     </div>
   );

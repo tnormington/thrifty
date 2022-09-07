@@ -19,13 +19,13 @@ const Pin = ({
   endDateTime,
   lootTypes,
   isNewPin,
-  isHovered,
   isActive,
+  $hover,
 }) => {
   // get color class based on sale type
   const color = SALE_TYPES.find((t) => t.label === saleType).color;
   const borderColor = isNewPin ? color : "white";
-  let size = isNewPin || isHovered ? 30 : 20;
+  let size = isNewPin || $hover ? 30 : 20;
   if (isActive) size = "max-content";
 
   const start = startDateTime ? dayjs(startDateTime) : false;

@@ -25,6 +25,7 @@ const Map = ({
   hoveredPin,
   handlePinClick,
   activePin,
+  latOffset,
 }) => {
   const handleMapClick = (data) => {
     if (newPin === null && userType === "listing") setNewPin(data);
@@ -37,17 +38,21 @@ const Map = ({
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
         onClick={handleMapClick}
-        center={newPin !== null ? [newPin.lat, newPin.lng] : false}
+        center={newPin !== null ? [newPin.lat - latOffset, newPin.lng] : false}
         onChange={onMapChange}
         zoom={newPin !== null ? 15 : null}
-        onChildMouseEnter={handleHoverPin}
-        onChildMouseLeave={handleHoverPin}
-        onChildMouseDown={handlePinClick}
+        // onChildMouseEnter={handleHoverPin}
+        // onChildMouseLeave={handleHoverPin}
+        onChildClick={handlePinClick}
+        options={{
+          gestureHandling: "greedy",
+        }}
       >
-        {newPin !== null && <Pin {...newPin} isNewPin />}
+        {newPin !== null && <Pin {...newPin} key="newPinKey" isNewPin />}
         {pins &&
           pins.map((pin) => (
             <Pin
+              key={pin.key}
               {...pin}
               isHovered={hoveredPin === pin.key}
               isActive={activePin === pin.key}
