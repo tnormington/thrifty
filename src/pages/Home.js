@@ -1,17 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Map from "../components/Map";
 
-const bigButtonStyle = {
-  width: 100,
-  height: 100,
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  margin: "0 10px",
-};
+import { getDatabase, set, push, ref, onValue } from "firebase/database";
+
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import AddressForm from "../components/AddressForm";
+import NewPinForm from "../components/NewPinForm";
 
 const Home = ({ userType, address, setUserType, handleAddressChange }) => {
+  const [pins, setPins] = useState();
+  const [newPin, setNewPin] = useState(null);
+  useEffect(() => {
+    const db = getDatabase();
+    const pinsRef = ref(db, "pins");
+    onValue(pinsRef, (snapshot) => {
+      const data = snapshot.val();
+      setPins(parsePinData(data));
+    });
+  }, []);
+
+  const parsePinData = (data) => {
+    let result = [];
+    for (const key in data) {
+      result.push({ ...data[key], key });
+    }
+
+    return result;
+  };
+
+  const onMapChange = ({ center, zoom, bounds, marginBounds }) => {
+    // TODO: maybe use this to lock center when there is a newPin down, I can't figure out if that is good UX
+  };
+
+  const handleUserTypeToggle = () => {
+    setNewPin(null);
+    setUserType(userType === "looking" ? "listing" : "looking");
+  };
+
   return (
     <div>
       <div
@@ -33,83 +60,53 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
         >
           Thrifty
         </h1>
-        {userType === null && (
-          <div style={{ pointerEvents: "auto", marginBottom: 10 }}>
-            <button
-              style={bigButtonStyle}
-              onClick={() => setUserType("looking")}
-            >
-              Looking
-            </button>
-            <button
-              style={bigButtonStyle}
-              onClick={() => setUserType("listing")}
-            >
-              Listing
-            </button>
-          </div>
-        )}
-        {userType !== null && (
-          <div
-            style={{
-              padding: "4px 24px",
-              borderRadius: 4,
-              background: "#fff",
-              display: "inline-block",
-              pointerEvents: "auto",
-            }}
-          >
-            {userType === "listing" && (
-              <>
-                <p>
-                  Click anywhere to drop a pin, or enter an address below to
-                  list a sale.
-                  <br /> To search for sales, click{" "}
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setUserType("looking");
-                    }}
-                  >
-                    here
-                  </button>
-                </p>
-                <input
-                  style={{ marginBottom: 10, width: "100%" }}
-                  type="text"
-                  placeholder="Enter an Address or click anywhere on the map to drop a pin"
-                  value={address}
-                  onChange={handleAddressChange}
-                />
-              </>
-            )}
-            {userType === "looking" && (
-              <>
-                <p>
-                  Enter an address or zip code to start looking for sales.
-                  <br /> To list a sale, click{" "}
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setUserType("listing");
-                    }}
-                  >
-                    here
-                  </button>
-                </p>
-                <input
-                  style={{ marginBottom: 10, width: "100%" }}
-                  type="text"
-                  placeholder="Enter an Address or Zip Code"
-                  value={address}
-                  onChange={handleAddressChange}
-                />
-              </>
-            )}
-          </div>
-        )}
       </div>
-      <Map userType={userType} />
+
+      <div
+        style={{
+          position: "absolute",
+          bottom: 20,
+          left: "50%",
+          zIndex: 10,
+          transform: "translateX(-50%)",
+          maxWidth: 320,
+        }}
+      >
+        {newPin === null && (
+          <AddressForm
+            userType={userType}
+            handleAddressChange={handleAddressChange}
+            address={address}
+          />
+        )}
+        {newPin !== null && (
+          <NewPinForm {...newPin} clearNewPin={() => setNewPin(null)} />
+        )}
+        <ButtonGroup className="w-100 mt-2" aria-label="Select a user type">
+          <Button
+            active={userType === "looking"}
+            variant="primary"
+            onClick={handleUserTypeToggle}
+          >
+            Looking
+          </Button>
+          <Button
+            active={userType === "listing"}
+            variant="primary"
+            onClick={handleUserTypeToggle}
+          >
+            Listing
+          </Button>
+        </ButtonGroup>
+      </div>
+
+      <Map
+        userType={userType}
+        pins={pins}
+        newPin={newPin}
+        setNewPin={setNewPin}
+        onMapChange={onMapChange}
+      />
     </div>
   );
 };

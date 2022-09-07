@@ -15,33 +15,9 @@ const defaultMapProps = {
   zoom: 13,
 };
 
-const Map = ({ userType }) => {
-  const [pins, setPins] = useState();
-  const [newPin, setNewPin] = useState(null);
-  useEffect(() => {
-    const db = getDatabase();
-    const pinsRef = ref(db, "pins");
-    onValue(pinsRef, (snapshot) => {
-      const data = snapshot.val();
-      setPins(parsePinData(data));
-    });
-  }, []);
-
-  const parsePinData = (data) => {
-    let result = [];
-    for (const key in data) {
-      result.push({ ...data[key], key });
-    }
-
-    return result;
-  };
-
+const Map = ({ userType, pins, newPin, setNewPin, onMapChange }) => {
   const handleMapClick = (data) => {
     if (newPin === null && userType === "listing") setNewPin(data);
-  };
-
-  const clearNewPin = () => {
-    setNewPin(null);
   };
 
   return (
@@ -51,8 +27,11 @@ const Map = ({ userType }) => {
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
         onClick={handleMapClick}
+        center={newPin !== null ? [newPin.lat, newPin.lng] : false}
+        onChange={onMapChange}
+        zoom={newPin !== null ? 15 : null}
       >
-        {newPin !== null && <NewPin {...newPin} clearNewPin={clearNewPin} />}
+        {newPin !== null && <Pin {...newPin} isNewPin />}
         {pins && pins.map((pin) => <Pin {...pin} />)}
       </GoogleMapReact>
     </div>

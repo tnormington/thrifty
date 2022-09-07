@@ -1,14 +1,30 @@
 import React from "react";
+import { SALE_TYPES } from "../constants";
 
-const Pin = ({ color = "red", outline = false }) => {
+import "./Pin.css";
+
+const Pin = ({
+  saleType = "Garage/Yard Sale",
+  startDateTime,
+  endDateTime,
+  lootTypes,
+  isNewPin,
+}) => {
+  // get color class based on sale type
+  const color = SALE_TYPES.find((t) => t.label === saleType).color;
+  const size = isNewPin ? "30px" : "20px";
+
   return (
     <div
+      className={`pin ${isNewPin ? "pin-pulse" : ""} bg-${
+        !isNewPin ? color : "white"
+      } border-${color}`}
       style={{
-        width: "20px",
-        height: "20px",
+        width: size,
+        height: size,
         borderRadius: "50%",
-        background: !outline ? color : "transparent",
-        border: `2px solid ${color}`,
+        borderStyle: "solid",
+        borderWidth: "2px",
         transform: "translate(-50%, -50%)",
         position: "relative",
         zIndex: -1,

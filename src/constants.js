@@ -1,7 +1,7 @@
 export const SALE_TYPES = [
-  { label: "Garage/Yard Sale", color: "green" },
-  { label: "Estate Sale", color: "purple" },
-  { label: "Moving Sale", color: "yellow" },
+  { label: "Garage/Yard Sale", color: "primary" },
+  { label: "Estate Sale", color: "success" },
+  { label: "Moving Sale", color: "warning" },
 ];
 
 export const LOOT_TYPES = [

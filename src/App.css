@@ -3,19 +3,6 @@ body {
 }
 
 
-input[type="text"], input[type="submit"] {
-  padding: 6px 10px;
-}
-
-input[type="submit"] {
-  background: #8a8aff;
-  color: #fff;
-  font-size: 18px;
-  outline: none;
-  border-radius: 3px;
-}
-
-
 * {
   box-sizing: border-box;
 }
