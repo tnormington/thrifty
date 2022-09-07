@@ -64,7 +64,7 @@ const Pin = ({
           <p className="text-white mb-1">{dateText}</p>
           {lootTypes &&
             lootTypes.split(", ").map((t) => (
-              <Badge bg="white" className="text-dark me-1">
+              <Badge key={t} bg="white" className="text-dark me-1">
                 {t}
               </Badge>
             ))}

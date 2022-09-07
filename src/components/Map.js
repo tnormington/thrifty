@@ -31,7 +31,7 @@ const Map = ({
   };
 
   return (
-    <div style={{ height: "100vh", width: "100%" }}>
+    <div style={{ height: "calc(100vh - 60px)", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: googleMapKey }}
         defaultCenter={defaultMapProps.center}
@@ -52,6 +52,13 @@ const Map = ({
               if (!pin.saleType) return false;
 
               if (!filters.saleTypes.includes(pin.saleType)) return false;
+              if (
+                pin.lootTypes &&
+                !filters.lootTypes.some((t) =>
+                  pin.lootTypes.split(", ").includes(t)
+                )
+              )
+                return false;
 
               return true;
             })

@@ -14,6 +14,7 @@ import { SALE_TYPES, LOOT_TYPES } from "../constants";
 
 const defaultFilters = {
   saleTypes: SALE_TYPES.map((t) => t.label),
+  lootTypes: LOOT_TYPES.map((t) => t.label),
 };
 
 const Home = ({ userType, address, setUserType, handleAddressChange }) => {
@@ -42,13 +43,14 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
   };
 
   const onMapChange = ({ center, zoom, bounds, marginBounds, size }) => {
+    // get the latitude offset in pixels, this value is used to offset the map bounds when centering on a newPin
     setLatOffset((200 * (bounds.nw.lat - bounds.se.lat)) / size.height);
   };
 
   const handleUserTypeChange = (type) => {
     setNewPin(null);
     setActivePin(null);
-    setUserType(type);
+    setUserType(userType === type ? null : type);
   };
 
   const handlePinClick = (id) => {
@@ -76,6 +78,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
             fontSize: "60px",
             color: "#fff",
             fontFamily: "'Lobster', cursive",
+            fontWeight: 400,
             textShadow: "2px 2px 10px rgba(0, 0, 0, 0.8)",
           }}
         >
@@ -109,6 +112,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
             filters={filters}
             setFilters={setFilters}
             reset={resetFilters}
+            close={() => setUserType(null)}
           />
         )}
         <ButtonGroup className="w-100 mt-2" aria-label="Select a user type">

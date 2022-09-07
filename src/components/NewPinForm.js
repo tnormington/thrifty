@@ -64,6 +64,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
     >
       <Form.Group className="mb-3">
         <Select
+          isSearchable={false}
           onChange={handleTypeChange}
           placeholder="Select A Type of Sale"
           options={SALE_TYPES.map(({ label }) => ({
@@ -74,6 +75,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
       </Form.Group>
       <Form.Group className="mb-3">
         <Select
+          isSearchable={false}
           onChange={handleLootTypeChange}
           isMulti
           placeholder="What are you selling?"
@@ -100,7 +102,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
         </Button>
         <Button
           type="button"
-          variant="link"
+          variant="outline-secondary"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
