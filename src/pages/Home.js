@@ -93,7 +93,8 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
           left: "50%",
           zIndex: 10,
           transform: "translateX(-50%)",
-          width: 320,
+          maxWidth: 420,
+          width: "100%",
         }}
       >
         {newPin === null &&
@@ -151,6 +152,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
         onMapChange={onMapChange}
         handlePinClick={handlePinClick}
         activePin={activePin}
+        setActivePin={setActivePin}
         latOffset={latOffset}
         filters={filters}
       />

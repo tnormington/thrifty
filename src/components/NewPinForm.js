@@ -15,22 +15,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
   const [lootTypes, setLootTypes] = useState();
   const [startDateTime, setStartDateTime] = useState();
   const [endDateTime, setEndDateTime] = useState();
-
-  const handleTypeChange = (value) => {
-    setSaleType(value);
-  };
-
-  const handleLootTypeChange = (value) => {
-    setLootTypes(value);
-  };
-
-  const handleStartDateTimeChange = (value) => {
-    console.log(typeof value);
-    setStartDateTime(value);
-  };
-  const handleEndDateTimeChange = (value) => {
-    setEndDateTime(value);
-  };
+  const [address, setAddress] = useState();
 
   const addPin = (e) => {
     e.preventDefault();
@@ -65,7 +50,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
       <Form.Group className="mb-3">
         <Select
           isSearchable={false}
-          onChange={handleTypeChange}
+          onChange={(val) => setSaleType(val)}
           placeholder="Select A Type of Sale"
           options={SALE_TYPES.map(({ label }) => ({
             label,
@@ -76,7 +61,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
       <Form.Group className="mb-3">
         <Select
           isSearchable={false}
-          onChange={handleLootTypeChange}
+          onChange={(val) => setLootTypes(val)}
           isMulti
           placeholder="What are you selling?"
           options={LOOT_TYPES.map(({ label }) => ({ label, value: label }))}
@@ -85,15 +70,24 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
       <Form.Group className="mb-3">
         <Form.Label>Starts at</Form.Label>
         <DateTimePicker
-          onChange={handleStartDateTimeChange}
+          onChange={(val) => setStartDateTime(val)}
           value={startDateTime}
         />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Ends at</Form.Label>
         <DateTimePicker
-          onChange={handleEndDateTimeChange}
+          onChange={(val) => setEndDateTime(val)}
           value={endDateTime}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Address</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Street Address"
+          onChange={(e) => setAddress(e.target.value)}
+          value={address}
         />
       </Form.Group>
       <div className="d-grid gap-2">

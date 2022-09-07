@@ -20,6 +20,7 @@ const Map = ({
   onMapChange,
   handlePinClick,
   activePin,
+  setActivePin,
   latOffset,
   filters,
 }) => {
@@ -60,7 +61,15 @@ const Map = ({
               return true;
             })
             .map((pin) => (
-              <Pin {...pin} key={pin.key} isActive={activePin === pin.key} />
+              <Pin
+                {...pin}
+                key={pin.key}
+                isActive={activePin !== null && activePin === pin.key}
+                closePin={(e) => {
+                  e.stopPropagation();
+                  setActivePin(null);
+                }}
+              />
             ))}
       </GoogleMapReact>
     </div>

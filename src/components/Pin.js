@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 import { SALE_TYPES } from "../constants";
 
 import dayjs from "dayjs";
@@ -21,6 +21,7 @@ const Pin = ({
   isNewPin,
   isActive,
   $hover,
+  closePin,
 }) => {
   // get color class based on sale type
   const color = SALE_TYPES.find((t) => t.label === saleType).color;
@@ -48,6 +49,7 @@ const Pin = ({
       } border-${borderColor}`}
       style={{
         width: size,
+        maxWidth: 420,
         height: size,
         borderRadius: isActive ? 10 : "50%",
         borderStyle: "solid",
@@ -56,18 +58,26 @@ const Pin = ({
         position: "relative",
         zIndex: isActive ? 5 : -1,
         transition: "all 0.15s ease-out",
+        fontSize: 20,
+        boxShadow: isActive ? "0 4px 20px rgba(0, 0, 0, 0.25)" : "none",
       }}
     >
       {isActive && (
         <div style={{ margin: 10 }}>
-          <h5 className="text-white mb-0">{saleType}</h5>
+          <h3 className="text-white mb-0">{saleType}</h3>
           <p className="text-white mb-1">{dateText}</p>
           {lootTypes &&
             lootTypes.split(", ").map((t) => (
-              <Badge key={t} bg="white" className="text-dark me-1">
+              <Badge key={t} bg="white" className="text-dark me-1 mb-1">
                 {t}
               </Badge>
             ))}
+
+          <div className="d-grid mt-2">
+            <Button variant="outline-light" onClick={closePin}>
+              Close
+            </Button>
+          </div>
         </div>
       )}
     </div>

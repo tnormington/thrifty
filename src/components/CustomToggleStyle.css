@@ -3,14 +3,32 @@
     background-color: var(--bs-primary);
 }
 
+.garage-yard-sale.react-toggle--checked .react-toggle-thumb {
+    border-color: var(--bs-primary);
+}
+
 
 
 .estate-sale.react-toggle--checked .react-toggle-track,
 .estate-sale.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
     background-color: var(--bs-success);
 }
+.estate-sale.react-toggle--checked .react-toggle-thumb {
+    border-color: var(--bs-success);
+}
 
 .moving-sale.react-toggle--checked .react-toggle-track,
 .moving-sale.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
     background-color: var(--bs-warning);
+}
+.moving-sale.react-toggle--checked .react-toggle-thumb {
+    border-color: var(--bs-warning);
+}
+
+.loot-type.react-toggle--checked .react-toggle-track,
+.loot-type.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+    background-color: var(--bs-info);
+}
+.loot-type.react-toggle--checked .react-toggle-thumb {
+    border-color: var(--bs-info);
 }
