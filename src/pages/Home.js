@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Map from "../components/Map";
 
-import { getDatabase, set, push, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";

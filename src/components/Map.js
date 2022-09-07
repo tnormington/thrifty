@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { getDatabase, set, push, ref, onValue } from "firebase/database";
+import React from "react";
 
 import GoogleMapReact from "google-map-react";
-// import { googleMapKey } from "../keys";
 
 import Pin from "./Pin";
-import NewPin from "./NewPin";
 
 const defaultMapProps = {
   center: {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -8,19 +8,14 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 
-import NewPinForm from "./components/NewPin";
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getDatabase, set, ref } from "firebase/database";
 
 import firebaseConfig from "./firebaseConfig";
 import { Button } from "react-bootstrap";
 
-console.log(firebaseConfig);
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-// const db = getDatabase(app);
 
 function App() {
   const [user, setUser] = useState(null);
