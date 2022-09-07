@@ -25,7 +25,7 @@ const AddressForm = ({ userType, handleAddressChange, address }) => {
               </p>
               <Form.Control
                 type="text"
-                placeholder="Enter an Address or Zip Code"
+                placeholder="Enter Your Address"
                 value={address}
                 onChange={handleAddressChange}
               />
@@ -33,7 +33,7 @@ const AddressForm = ({ userType, handleAddressChange, address }) => {
           )}
           {userType === "looking" && (
             <>
-              <p>Enter an address or zip code to start looking for sales.</p>
+              <p>Enter an address or zip code to find sales in the area.</p>
               <Form.Control
                 type="text"
                 placeholder="Enter an Address or Zip Code"
