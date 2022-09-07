@@ -15,7 +15,17 @@ const defaultMapProps = {
   zoom: 13,
 };
 
-const Map = ({ userType, pins, newPin, setNewPin, onMapChange }) => {
+const Map = ({
+  userType,
+  pins,
+  newPin,
+  setNewPin,
+  onMapChange,
+  handleHoverPin,
+  hoveredPin,
+  handlePinClick,
+  activePin,
+}) => {
   const handleMapClick = (data) => {
     if (newPin === null && userType === "listing") setNewPin(data);
   };
@@ -30,9 +40,19 @@ const Map = ({ userType, pins, newPin, setNewPin, onMapChange }) => {
         center={newPin !== null ? [newPin.lat, newPin.lng] : false}
         onChange={onMapChange}
         zoom={newPin !== null ? 15 : null}
+        onChildMouseEnter={handleHoverPin}
+        onChildMouseLeave={handleHoverPin}
+        onChildMouseDown={handlePinClick}
       >
         {newPin !== null && <Pin {...newPin} isNewPin />}
-        {pins && pins.map((pin) => <Pin {...pin} />)}
+        {pins &&
+          pins.map((pin) => (
+            <Pin
+              {...pin}
+              isHovered={hoveredPin === pin.key}
+              isActive={activePin === pin.key}
+            />
+          ))}
       </GoogleMapReact>
     </div>
   );

@@ -15,6 +15,7 @@ import { getAuth } from "firebase/auth";
 import { getDatabase, set, ref } from "firebase/database";
 
 import { firebaseConfig } from "./keys";
+import { Button } from "react-bootstrap";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -23,7 +24,7 @@ const auth = getAuth(app);
 function App() {
   const [user, setUser] = useState(null);
   const [address, setAddress] = useState("");
-  const [userType, setUserType] = useState(null);
+  const [userType, setUserType] = useState("looking");
 
   const handleAddressChange = (e) => {
     setAddress(e.target.value);
@@ -40,9 +41,9 @@ function App() {
         <Link to="/">Home</Link>
         {!user && <Link to="/signup">Login</Link>}
         {user && (
-          <a href="#" onClick={logout}>
+          <Button variant="link" onClick={logout}>
             Sign Out
-          </a>
+          </Button>
         )}
       </nav>
       <Routes>

@@ -12,6 +12,9 @@ import NewPinForm from "../components/NewPinForm";
 const Home = ({ userType, address, setUserType, handleAddressChange }) => {
   const [pins, setPins] = useState();
   const [newPin, setNewPin] = useState(null);
+  const [hoveredPin, setHoveredPin] = useState(null);
+  const [activePin, setActivePin] = useState(null);
+
   useEffect(() => {
     const db = getDatabase();
     const pinsRef = ref(db, "pins");
@@ -37,6 +40,14 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
   const handleUserTypeToggle = () => {
     setNewPin(null);
     setUserType(userType === "looking" ? "listing" : "looking");
+  };
+
+  const handleHoverPin = (id) => {
+    setHoveredPin(hoveredPin === id ? null : id);
+  };
+
+  const handlePinClick = (id) => {
+    setActivePin(id);
   };
 
   return (
@@ -69,7 +80,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
           left: "50%",
           zIndex: 10,
           transform: "translateX(-50%)",
-          maxWidth: 320,
+          width: 320,
         }}
       >
         {newPin === null && (
@@ -106,6 +117,10 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
         newPin={newPin}
         setNewPin={setNewPin}
         onMapChange={onMapChange}
+        handleHoverPin={handleHoverPin}
+        hoveredPin={hoveredPin}
+        handlePinClick={handlePinClick}
+        activePin={activePin}
       />
     </div>
   );
