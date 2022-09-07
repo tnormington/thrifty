@@ -21,11 +21,10 @@ const Map = ({
   newPin,
   setNewPin,
   onMapChange,
-  handleHoverPin,
-  hoveredPin,
   handlePinClick,
   activePin,
   latOffset,
+  filters,
 }) => {
   const handleMapClick = (data) => {
     if (newPin === null && userType === "listing") setNewPin(data);
@@ -41,8 +40,6 @@ const Map = ({
         center={newPin !== null ? [newPin.lat - latOffset, newPin.lng] : false}
         onChange={onMapChange}
         zoom={newPin !== null ? 15 : null}
-        // onChildMouseEnter={handleHoverPin}
-        // onChildMouseLeave={handleHoverPin}
         onChildClick={handlePinClick}
         options={{
           gestureHandling: "greedy",
@@ -50,14 +47,17 @@ const Map = ({
       >
         {newPin !== null && <Pin {...newPin} key="newPinKey" isNewPin />}
         {pins &&
-          pins.map((pin) => (
-            <Pin
-              key={pin.key}
-              {...pin}
-              isHovered={hoveredPin === pin.key}
-              isActive={activePin === pin.key}
-            />
-          ))}
+          pins
+            .filter((pin) => {
+              if (!pin.saleType) return false;
+
+              if (!filters.saleTypes.includes(pin.saleType)) return false;
+
+              return true;
+            })
+            .map((pin) => (
+              <Pin {...pin} key={pin.key} isActive={activePin === pin.key} />
+            ))}
       </GoogleMapReact>
     </div>
   );

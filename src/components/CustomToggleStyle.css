@@ -1,0 +1,16 @@
+.garage-yard-sale.react-toggle--checked .react-toggle-track,
+.garage-yard-sale.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+    background-color: var(--bs-primary);
+}
+
+
+
+.estate-sale.react-toggle--checked .react-toggle-track,
+.estate-sale.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+    background-color: var(--bs-success);
+}
+
+.moving-sale.react-toggle--checked .react-toggle-track,
+.moving-sale.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+    background-color: var(--bs-warning);
+}

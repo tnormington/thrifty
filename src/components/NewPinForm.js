@@ -107,7 +107,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
             clearNewPin();
           }}
         >
-          Close
+          Cancel
         </Button>
       </div>
     </Form>

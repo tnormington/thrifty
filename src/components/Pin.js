@@ -54,7 +54,7 @@ const Pin = ({
         borderWidth: "2px",
         transform: "translate(-50%, -50%)",
         position: "relative",
-        zIndex: -1,
+        zIndex: isActive ? 5 : -1,
         transition: "all 0.15s ease-out",
       }}
     >

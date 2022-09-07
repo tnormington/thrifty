@@ -8,12 +8,20 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import AddressForm from "../components/AddressForm";
 import NewPinForm from "../components/NewPinForm";
+import PinFilters from "../components/PinFilters";
+
+import { SALE_TYPES, LOOT_TYPES } from "../constants";
+
+const defaultFilters = {
+  saleTypes: SALE_TYPES.map((t) => t.label),
+};
 
 const Home = ({ userType, address, setUserType, handleAddressChange }) => {
   const [pins, setPins] = useState();
   const [newPin, setNewPin] = useState(null);
   const [activePin, setActivePin] = useState(null);
   const [latOffset, setLatOffset] = useState();
+  const [filters, setFilters] = useState({ ...defaultFilters });
 
   useEffect(() => {
     const db = getDatabase();
@@ -47,6 +55,10 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
     setActivePin(id);
   };
 
+  const resetFilters = () => {
+    setFilters({ ...defaultFilters });
+  };
+
   return (
     <div>
       <div
@@ -63,6 +75,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
           style={{
             fontSize: "60px",
             color: "#fff",
+            fontFamily: "'Lobster', cursive",
             textShadow: "2px 2px 10px rgba(0, 0, 0, 0.8)",
           }}
         >
@@ -80,15 +93,23 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
           width: 320,
         }}
       >
-        {newPin === null && (
-          <AddressForm
-            userType={userType}
-            handleAddressChange={handleAddressChange}
-            address={address}
-          />
-        )}
+        {newPin === null &&
+          (userType === "listing" || userType === "looking") && (
+            <AddressForm
+              userType={userType}
+              handleAddressChange={handleAddressChange}
+              address={address}
+            />
+          )}
         {newPin !== null && (
           <NewPinForm {...newPin} clearNewPin={() => setNewPin(null)} />
+        )}
+        {userType === "filtering" && (
+          <PinFilters
+            filters={filters}
+            setFilters={setFilters}
+            reset={resetFilters}
+          />
         )}
         <ButtonGroup className="w-100 mt-2" aria-label="Select a user type">
           <Button
@@ -105,6 +126,13 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
           >
             Listing
           </Button>
+          <Button
+            active={userType === "filtering"}
+            variant="primary"
+            onClick={() => handleUserTypeChange("filtering")}
+          >
+            Filter
+          </Button>
         </ButtonGroup>
       </div>
 
@@ -117,6 +145,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
         handlePinClick={handlePinClick}
         activePin={activePin}
         latOffset={latOffset}
+        filters={filters}
       />
     </div>
   );
