@@ -1,50 +1,36 @@
 import React from "react";
 
-import Form from "react-bootstrap/Form";
-
-const AddressForm = ({ userType, handleAddressChange, address }) => {
+const AddressForm = ({ userType, addressInputRef }) => {
   return (
-    <>
-      {userType !== null && (
-        <div
-          className="shadow"
-          style={{
-            padding: "24px",
-            textAlign: "center",
-            borderRadius: 4,
-            background: "#fff",
-            display: "inline-block",
-            pointerEvents: "auto",
-          }}
-        >
-          {userType === "listing" && (
-            <>
-              <p>
-                Click anywhere to drop a pin, or enter an address below to list
-                a sale.
-              </p>
-              <Form.Control
-                type="text"
-                placeholder="Enter Your Address"
-                value={address}
-                onChange={handleAddressChange}
-              />
-            </>
-          )}
-          {userType === "looking" && (
-            <>
-              <p>Enter an address or zip code to find sales in the area.</p>
-              <Form.Control
-                type="text"
-                placeholder="Enter an Address or Zip Code"
-                value={address}
-                onChange={handleAddressChange}
-              />
-            </>
-          )}
-        </div>
+    <div
+      className="shadow"
+      style={{
+        padding: "24px",
+        textAlign: "center",
+        borderRadius: 4,
+        background: "#fff",
+        pointerEvents: "auto",
+      }}
+    >
+      {userType === "listing" && (
+        <p>
+          Click anywhere to drop a pin, or enter an address below to list a
+          sale.
+        </p>
       )}
-    </>
+      {userType === "looking" && (
+        <p>Enter an address to find sales in the area.</p>
+      )}
+      <form autoComplete="off">
+        <input
+          className="form-control"
+          type="text"
+          ref={addressInputRef}
+          autoComplete="off"
+          placeholder="Enter an Address"
+        />
+      </form>
+    </div>
   );
 };
 

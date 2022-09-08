@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -21,9 +21,43 @@ function App() {
   const [user, setUser] = useState(null);
   const [address, setAddress] = useState("");
   const [userType, setUserType] = useState("looking");
+  const [maps, setMaps] = useState();
+  const [center, setCenter] = useState();
+  const [addressInputNode, setAddressInputNode] = useState();
 
-  const handleAddressChange = (e) => {
-    setAddress(e.target.value);
+  const addressInputRef = useCallback((el) => {
+    setAddressInputNode(el);
+  }, []);
+  const autoCompleteRef = useRef();
+
+  const setupAutoComplete = () => {
+    if (!maps?.places?.Autocomplete) return;
+
+    if (!addressInputNode) return;
+
+    autoCompleteRef.current = new maps.places.Autocomplete(addressInputNode, {
+      componentRestrictions: { country: ["us"] },
+      fields: ["address_components", "geometry", "name"],
+      types: ["address"],
+    });
+
+    autoCompleteRef.current.addListener("place_changed", async () => {
+      const place = await autoCompleteRef.current.getPlace();
+      console.log({ place });
+      if (place) handlePlaceChange(place);
+    });
+  };
+
+  const handlePlaceChange = ({ geometry, address_components }) => {
+    setCenter([geometry.location.lat(), geometry.location.lng()]);
+    setAddress(address_components);
+  };
+
+  // run the Autocomplete setup when either maps or addressInputNode changes to ensure it is successful
+  useEffect(setupAutoComplete, [maps, addressInputNode]);
+
+  const handleGoogleApiLoaded = (map, maps) => {
+    setMaps(maps);
   };
 
   const logout = (e) => {
@@ -50,7 +84,10 @@ function App() {
               userType={userType}
               address={address}
               setUserType={setUserType}
-              handleAddressChange={handleAddressChange}
+              handleGoogleApiLoaded={handleGoogleApiLoaded}
+              addressInputRef={addressInputRef}
+              center={center}
+              setCenter={setCenter}
             />
           }
         />

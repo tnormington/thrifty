@@ -36,9 +36,10 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
   return (
     <Form
       style={{
-        maxWidth: "320px",
-        width: "320px",
+        // maxWidth: "420px",
+        width: "100%",
         display: "flex",
+        // margin: "0 10px 0 10px",
         flexDirection: "column",
         zIndex: 3,
         padding: 10,
@@ -50,6 +51,7 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
       <Form.Group className="mb-3">
         <Select
           isSearchable={false}
+          menuPlacement="auto"
           onChange={(val) => setSaleType(val)}
           placeholder="Select A Type of Sale"
           options={SALE_TYPES.map(({ label }) => ({
@@ -63,6 +65,8 @@ const NewPinForm = ({ lat, lng, clearNewPin }) => {
           isSearchable={false}
           onChange={(val) => setLootTypes(val)}
           isMulti
+          menuPlacement="auto"
+          closeMenuOnSelect={false}
           placeholder="What are you selling?"
           options={LOOT_TYPES.map(({ label }) => ({ label, value: label }))}
         />

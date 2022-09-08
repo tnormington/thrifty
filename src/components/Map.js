@@ -12,6 +12,29 @@ const defaultMapProps = {
   zoom: 13,
 };
 
+function createMapOptions(maps) {
+  // next props are exposed at maps
+  // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
+  // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
+  // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
+  // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
+  // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
+  return {
+    zoomControlOptions: {
+      position: maps.ControlPosition.RIGHT_CENTER,
+      style: maps.ZoomControlStyle.SMALL,
+    },
+    mapTypeControlOptions: {
+      position: maps.ControlPosition.TOP_RIGHT,
+      style: maps.MapTypeControlStyle.DEFAULT,
+    },
+    fullscreenControl: false,
+    streetViewControl: false,
+    mapTypeControl: true,
+    gestureHandling: "greedy",
+  };
+}
+
 const Map = ({
   userType,
   pins,
@@ -23,25 +46,30 @@ const Map = ({
   setActivePin,
   latOffset,
   filters,
+  center,
+  handleGoogleApiLoaded,
 }) => {
   const handleMapClick = (data) => {
     if (newPin === null && userType === "listing") setNewPin(data);
   };
 
   return (
-    <div style={{ height: "calc(100vh - 60px)", width: "100%" }}>
+    <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
+        bootstrapURLKeys={{
+          key: process.env.REACT_APP_GOOGLE_API_KEY,
+          libraries: ["places"],
+        }}
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
         onClick={handleMapClick}
-        center={newPin !== null ? [newPin.lat - latOffset, newPin.lng] : false}
+        center={center}
         onChange={onMapChange}
         zoom={newPin !== null ? 15 : null}
         onChildClick={handlePinClick}
-        options={{
-          gestureHandling: "greedy",
-        }}
+        onGoogleApiLoaded={({ map, maps }) => handleGoogleApiLoaded(map, maps)}
+        yesIWantToUseGoogleMapApiInternals={true}
+        options={createMapOptions}
       >
         {newPin !== null && <Pin {...newPin} key="newPinKey" isNewPin />}
         {pins &&

@@ -17,7 +17,16 @@ const defaultFilters = {
   lootTypes: LOOT_TYPES.map((t) => t.label),
 };
 
-const Home = ({ userType, address, setUserType, handleAddressChange }) => {
+const Home = ({
+  userType,
+  address,
+  setUserType,
+  handleAddressChange,
+  handleGoogleApiLoaded,
+  addressInputRef,
+  center,
+  setCenter,
+}) => {
   const [pins, setPins] = useState();
   const [newPin, setNewPin] = useState(null);
   const [activePin, setActivePin] = useState(null);
@@ -89,12 +98,13 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
       <div
         style={{
           position: "absolute",
-          bottom: 20,
+          bottom: 0,
           left: "50%",
           zIndex: 10,
           transform: "translateX(-50%)",
           maxWidth: 420,
           width: "100%",
+          padding: 10,
         }}
       >
         {newPin === null &&
@@ -103,6 +113,7 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
               userType={userType}
               handleAddressChange={handleAddressChange}
               address={address}
+              addressInputRef={addressInputRef}
             />
           )}
         {newPin !== null && (
@@ -155,6 +166,9 @@ const Home = ({ userType, address, setUserType, handleAddressChange }) => {
         setActivePin={setActivePin}
         latOffset={latOffset}
         filters={filters}
+        center={center}
+        setCenter={setCenter}
+        handleGoogleApiLoaded={handleGoogleApiLoaded}
       />
     </div>
   );
